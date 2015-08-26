@@ -9,7 +9,7 @@ Application::~Application()
 
 Application::Application() : mActiveScene(nullptr), mWindow(sf::VideoMode(800,600), "Atari Breakout")
 {
-	
+	mWindow.setVerticalSyncEnabled(true);
 
 
 
@@ -54,7 +54,7 @@ void Application::update()
 
 void Application::render()
 {
-	mWindow.clear(sf::Color::White);
+	mWindow.clear(sf::Color(46, 46, 46));
 
 	if (mActiveScene)
 		mActiveScene->render();

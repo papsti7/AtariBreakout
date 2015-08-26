@@ -1,12 +1,13 @@
 #pragma once
 #include "Scene.h"
+#include "GameScene.h"
 
 class IntroScene : public Scene
 {
 public:
 	IntroScene(Application& app) : Scene(app)
 	{ 
-		mBackgroundTex.loadFromFile("data/intro.jpg");
+		mBackgroundTex.loadFromFile("D:/Programmieren/AtariBreakout/AtariBreakout/data/intro.png");
 		mBackgroundSpr.setTexture(mBackgroundTex);
 	}
 

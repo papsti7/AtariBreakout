@@ -7,9 +7,8 @@ void IntroScene::processEvent(const sf::Event& e)
 	{
 		if (e.key.code == sf::Keyboard::Return)
 		{
-			getApp().getWindow().close();
 			//Intro beenden
-			//getApp().setActiveScene(new Game(getApp));
+			getApp().setActiveScene(new GameScene(getApp()));
 		}
 	}
 }
