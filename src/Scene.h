@@ -4,11 +4,11 @@
 class Scene
 {
 public:
-	Scene(Application& app) : mApp(app) {  };
+	Scene(Application& app) : mApp(app) {  }
 
 	
 
-	virtual void processEvents(const sf::Event& e) = 0;
+	virtual void processEvent(const sf::Event& e) = 0;
 	virtual void update() = 0;
 	virtual void render() = 0;
 

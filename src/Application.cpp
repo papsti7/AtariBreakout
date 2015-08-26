@@ -6,6 +6,14 @@ Application::~Application()
 		delete mActiveScene;
 }
 
+Application::Application() : mActiveScene(nullptr), mWindow(sf::VideoMode(800,600), "Atari Breakout")
+{
+	
+
+
+
+}
+
 void Application::setActiveScene(Scene* ptr)
 {
 	if (mActiveScene)
@@ -15,16 +23,40 @@ void Application::setActiveScene(Scene* ptr)
 
 void Application::run()
 {
-	setActiveScene(new IntroScene(*this));
 	
 	while (mWindow.isOpen())
 	{
 		sf::Event event;
 		while (mWindow.pollEvent(event))
 		{
-			processEvents(event);
+			processEvent(event);
 		}
 		update();
 		render();
 	}
+}
+
+void Application::processEvent(const sf::Event& e)
+{
+	if (e.type == sf::Event::Closed)
+		mWindow.close();
+
+	if (mActiveScene)
+		mActiveScene->processEvent(e);
+}
+
+void Application::update()
+{
+	if (mActiveScene)
+		mActiveScene->update();
+}
+
+void Application::render()
+{
+	mWindow.clear(sf::Color::White);
+
+	if (mActiveScene)
+		mActiveScene->render();
+
+	mWindow.display();
 }

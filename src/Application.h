@@ -5,18 +5,22 @@
 class Application
 {
 public:
-	Application() : mActiveScene(nullptr) {	};
+	Application();
 
 	void run();
 
 	void setActiveScene(Scene* ptr);
+
+	sf::RenderWindow& getWindow() { return mWindow; }
+
+	~Application();
 
 private:
 
 	sf::RenderWindow mWindow;
 	Scene* mActiveScene;
 
-	void processEvents(const sf::Event& e);
+	void processEvent(const sf::Event& e);
 	void update();
 	void render();
 

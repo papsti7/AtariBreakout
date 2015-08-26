@@ -2,6 +2,8 @@
 
 #include "IntroScene.h"
 
+#include <iostream>
+
 int main()
 {
     Application app;
