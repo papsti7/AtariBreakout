@@ -19,7 +19,9 @@ public:
 
 private:
 	sf::RectangleShape mBat;
+	sf::CircleShape mBall;
 
+	sf::Vector2f mBallSpeed;
 
 
 
