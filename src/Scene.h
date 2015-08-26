@@ -1,5 +1,6 @@
 #pragma once
 #include "Application.h"
+#include "SFML\Window.hpp"
 
 class Scene
 {

@@ -1,4 +1,5 @@
 #include "Application.h"
+#include "Scene.h"
 
 Application::~Application()
 {

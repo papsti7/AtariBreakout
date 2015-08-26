@@ -1,7 +1,8 @@
 #pragma once
-#include "Scene.h"
+
 #include "SFML\Graphics.hpp"
 
+class Scene;
 class Application
 {
 public:
