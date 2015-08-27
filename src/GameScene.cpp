@@ -77,9 +77,9 @@ void GameScene::processEvent(const sf::Event& e)
 void GameScene::update()
 {
 	//Bat movement
-	if (sf::Keyboard::isKeyPressed(sf::Keyboard::A))
+	if (sf::Keyboard::isKeyPressed(sf::Keyboard::Left))
 		mBat.move(-5.f, 0.f);
-	else if (sf::Keyboard::isKeyPressed(sf::Keyboard::D))
+	else if (sf::Keyboard::isKeyPressed(sf::Keyboard::Right))
 		mBat.move(5.f, 0.f);
 	//bat clamping
 	if (mBat.getPosition().x <= 0.f)
