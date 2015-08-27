@@ -5,11 +5,7 @@
 class IntroScene : public Scene
 {
 public:
-	IntroScene(Application& app) : Scene(app)
-	{ 
-		mBackgroundTex.loadFromFile("D:/Programmieren/AtariBreakout/AtariBreakout/data/intro.png");
-		mBackgroundSpr.setTexture(mBackgroundTex);
-	}
+	IntroScene(Application& app);
 
 	virtual void processEvent(const sf::Event& e);
 	virtual void update();
