@@ -1,5 +1,6 @@
 #pragma once
 #include "Scene.h"
+#include "GameOverScene.h"
 
 class GameScene : public Scene
 {
@@ -22,7 +23,7 @@ private:
 	sf::CircleShape mBall;
 
 	sf::Vector2f mBallSpeed;
-
+	
 
 
 

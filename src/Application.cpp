@@ -10,9 +10,7 @@ Application::~Application()
 Application::Application() : mActiveScene(nullptr), mWindow(sf::VideoMode(800,600), "Atari Breakout")
 {
 	mWindow.setVerticalSyncEnabled(true);
-
-
-
+	mFont.loadFromFile("D:/Programmieren/AtariBreakout/AtariBreakout/data/VideoPhreak.ttf");
 }
 
 void Application::setActiveScene(Scene* ptr)
