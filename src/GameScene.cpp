@@ -13,21 +13,48 @@ GameScene::GameScene(Application& app) : Scene(app)
 
 	mBallSpeed = { -5.f, -4.f };
 	
-	//stones init
 	sf::RectangleShape temp_rect;
-	temp_rect.setFillColor(sf::Color::Red);
-	temp_rect.setSize(sf::Vector2f(70.f, 40.f));
-	mUpRowOne = 50 - 8;
-	mDownRowOne = 50 + 40;
-	while (mSpaceCounter <= (getApp().getWindow().getSize().x - (10 + 70)))
+	
+	//stones init
+	for (int row = 0; row <= 2; row++)
 	{
-		mSpaceCounter += 10;
-		
-		temp_rect.setPosition(float(mSpaceCounter), 50.f);
-		mStones.push_back(temp_rect);
+		if (row == 0)
+		{
+			temp_rect.setFillColor(sf::Color::Red);
+			mHeightSpaceCounter = 50;
+		}
+		else if (row == 1)
+		{
+			temp_rect.setFillColor(sf::Color::Green);
+			mHeightSpaceCounter = 105;
+		}
+		else if (row == 2)
+		{
+			temp_rect.setFillColor(sf::Color::Blue);
+			mHeightSpaceCounter = 155;
+		}
+		mStones.push_back(std::vector<sf::RectangleShape>());
+		temp_rect.setSize(sf::Vector2f(70.f - row*10.f, 40.f - row*5.f));
+		mWidthSpaceCounter = 0;
+		while (mWidthSpaceCounter <= (getApp().getWindow().getSize().x - (10 + 70 - row*10.f)))
+		{
+			mWidthSpaceCounter += 10;
 
-		mSpaceCounter += 70;
+			temp_rect.setPosition(float(mWidthSpaceCounter), float(mHeightSpaceCounter));
+			mStones.at(row).push_back(temp_rect);
+
+			mWidthSpaceCounter += 70 - row*10;
+		}
 	}
+	
+	
+	//-------------------------------------------------------------------------------------
+	
+	
+	
+	
+	mUpRow = 50 - 8;//
+	mDownRow = 50 + 40;
 
 }
 
@@ -50,61 +77,79 @@ void GameScene::update()
 		mBat.setPosition(getApp().getWindow().getSize().x - mBat.getSize().x, getApp().getWindow().getSize().y - (mBat.getSize().y + 25.f));
 
 
-
-	//Ball collision with stones
-	unsigned counter = 0;
-	//upside
-	if (mBall.getPosition().y <= mUpRowOne)
+	for (int row = 0; row <= 2; row++)
 	{
-		counter = 0;
-		for (auto& it : mStones)
+		if (row == 0)
 		{
-			if (((mBall.getPosition().y + mBall.getRadius()*2.f) >= it.getPosition().y) && (mBall.getPosition().x >= (it.getPosition().x - mBall.getRadius())) && (mBall.getPosition().x <= (it.getPosition().x + it.getSize().x - mBall.getRadius())))
-			{
-				mBallSpeed.y *= -1.f;
-				mStones.erase(mStones.begin() + counter);
-				counter = 0;
-				break;
-			}
-			counter++;
+			mUpRow = 42;
+			mDownRow = 90;
 		}
-	}
-	else if (mBall.getPosition().y <= mDownRowOne)
-	{
-		counter = 0;
-		
-		for (auto& it : mStones)
-		{	
-			if ((mBall.getPosition().x >= (it.getPosition().x - mBall.getRadius())) && (mBall.getPosition().x <= (it.getPosition().x + it.getSize().x - mBall.getRadius())))
+		else if (row == 1)
+		{
+			mUpRow = 97;
+			mDownRow = 140;
+		}
+		else if (row == 2)
+		{
+			mUpRow = 147;
+			mDownRow = 185;
+		}
+		//Ball collision with stones
+		unsigned counter = 0;
+		//upside
+		if (mBall.getPosition().y <= (mUpRow))
+		{
+			counter = 0;
+			for (auto& it : mStones.at(row))
 			{
-				if (mBall.getPosition().y <= (mDownRowOne - 5.f))//sides
+				if (((mBall.getPosition().y + mBall.getRadius()*2.f) >= it.getPosition().y) && (mBall.getPosition().x >= (it.getPosition().x - mBall.getRadius())) && (mBall.getPosition().x <= (it.getPosition().x + it.getSize().x - mBall.getRadius())))
 				{
-					if (mBall.getPosition().x > (it.getPosition().x + (it.getSize().x / 2.f)))//right side
+					mBallSpeed.y *= -1.f;
+					mStones.erase(mStones.begin() + counter);
+					counter = 0;
+					break;
+				}
+				counter++;
+			}
+		}
+		else if (mBall.getPosition().y <= mDownRow)
+		{
+			counter = 0;
+		
+			for (auto& it : mStones.at(row))
+			{	
+				if ((mBall.getPosition().x >= (it.getPosition().x - mBall.getRadius())) && (mBall.getPosition().x <= (it.getPosition().x + it.getSize().x - mBall.getRadius())))
+				{
+					if (mBall.getPosition().y <= (mDownRow - 5.f))//sides
 					{
-						mBall.setPosition(it.getPosition().x + it.getSize().x, mBall.getPosition().y);
-						mBallSpeed.x *= -1.f;
-					}
-					else//left side
-					{
-						mBall.setPosition(it.getPosition().x - mBall.getRadius() * 2.f, mBall.getPosition().y);
-						mBallSpeed.x *= -1.f;
-					}
+						if (mBall.getPosition().x > (it.getPosition().x + (it.getSize().x / 2.f)))//right side
+						{
+							mBall.setPosition(it.getPosition().x + it.getSize().x, mBall.getPosition().y);
+							mBallSpeed.x *= -1.f;
+						}
+						else//left side
+						{
+							mBall.setPosition(it.getPosition().x - mBall.getRadius() * 2.f, mBall.getPosition().y);
+							mBallSpeed.x *= -1.f;
+						}
 					
 				
+					}
+					else//down
+					{
+						mBall.setPosition(mBall.getPosition().x, float(mDownRow));
+						mBallSpeed.y *= -1.f;
+					}
+					mStones.erase(mStones.begin() + counter);
+					counter = 0;
+					break;
 				}
-				else//down
-				{
-					mBall.setPosition(mBall.getPosition().x, float(mDownRowOne));
-					mBallSpeed.y *= -1.f;
-				}
-				mStones.erase(mStones.begin() + counter);
-				counter = 0;
-				break;
+				counter++;
 			}
-			counter++;
-		}
-		counter = 0;
+			counter = 0;
 		
+		}
+
 	}
 
 	if (mStones.empty())
@@ -147,8 +192,10 @@ void GameScene::update()
 
 void GameScene::render()
 {
-	for(auto& it : mStones)
-		getApp().getWindow().draw(it);
+	for (auto& row : mStones)
+		for (auto& stone : row)
+			getApp().getWindow().draw(stone);
+
 	getApp().getWindow().draw(mBat);
 	getApp().getWindow().draw(mBall);
 

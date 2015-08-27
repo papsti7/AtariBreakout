@@ -28,10 +28,11 @@ private:
 	sf::Vector2f mBallSpeed;
 	
 	//rects and counter
-	std::vector<sf::RectangleShape> mStones;
-	unsigned mSpaceCounter;
-	unsigned mUpRowOne;
-	unsigned mDownRowOne;
+	std::vector<std::vector<sf::RectangleShape>> mStones;
+	unsigned mWidthSpaceCounter;
+	unsigned mHeightSpaceCounter;
+	unsigned mUpRow;
+	unsigned mDownRow;
 
 
 };
