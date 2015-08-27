@@ -1,7 +1,7 @@
 #include "GameScene.h"
 
 
-GameScene::GameScene(Application& app) : Scene(app)
+GameScene::GameScene(Application& app) : Scene(app), mStonesNumber(0), active(true), active2(true)
 {
 	//init Highscore
 	getApp().resetHighscore();
@@ -52,6 +52,7 @@ GameScene::GameScene(Application& app) : Scene(app)
 
 			temp_rect.setPosition(float(mWidthSpaceCounter), float(mHeightSpaceCounter));
 			mStones.at(row).push_back(temp_rect);
+			mStonesNumber++;
 
 			mWidthSpaceCounter += 70 - row*10;
 		}
@@ -176,6 +177,25 @@ void GameScene::update()
 	strstring << "Score: " << getApp().getHighscore();
 	mHighscore.setString(strstring.str());
 
+	//ball speed management
+	unsigned counter = 0;
+	for (auto& rows : mStones)
+		for (auto& stones : rows)
+			counter++;
+
+
+	if ((mStonesNumber - counter) >= 10)
+		if (active)
+		{
+			mBallSpeed *= 1.3f;
+			active = false;
+		}
+	else if ((mStonesNumber - counter) >= 28)
+		if (active2)
+		{
+			mBallSpeed *= 1.3f;
+			active2 = false;
+		}
 
 	//ball clamping of three sides
 	if (mBall.getPosition().x <= 0.f)
@@ -204,9 +224,11 @@ void GameScene::update()
 	{
 		getApp().setActiveScene(new GameOverScene(getApp()));
 	}
+	
+	
 	//ball movement
 	mBall.move(mBallSpeed);
-
+	
 	
 	
 }

@@ -35,6 +35,8 @@ private:
 	unsigned mHeightSpaceCounter;
 	unsigned mUpRow;
 	unsigned mDownRow;
+	unsigned mStonesNumber;
 
-
+	bool active;
+	bool active2;
 };
