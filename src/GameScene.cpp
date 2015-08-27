@@ -3,6 +3,16 @@
 
 GameScene::GameScene(Application& app) : Scene(app)
 {
+	//init Highscore
+	getApp().resetHighscore();
+	mHighscore.setFont(getApp().getFont());
+	mHighscore.setCharacterSize(20);
+	mHighscore.setColor(sf::Color(255, 255, 255));
+	mHighscore.setPosition(10.f, 10.f);
+
+
+
+	//init Ball
 	mBat.setSize(sf::Vector2f(85.f, 12.f));
 	mBat.setPosition(getApp().getWindow().getSize().x / 2.f - mBat.getSize().x / 2.f, getApp().getWindow().getSize().y - (mBat.getSize().y + 25.f));
 	mBat.setFillColor(sf::Color(51, 102, 255));
@@ -53,7 +63,7 @@ GameScene::GameScene(Application& app) : Scene(app)
 	
 	
 	
-	mUpRow = 50 - 8;//
+	mUpRow = 50 - 15;//
 	mDownRow = 50 + 40;
 
 }
@@ -106,6 +116,7 @@ void GameScene::update()
 				{
 					mBallSpeed.y *= -1.f;
 					mStones.at(row).erase(mStones.at(row).begin() + counter);
+					getApp().increaseHighscore();
 					counter = 0;
 					break;
 				}
@@ -126,11 +137,13 @@ void GameScene::update()
 						{
 							mBall.setPosition(it.getPosition().x + it.getSize().x, mBall.getPosition().y);
 							mBallSpeed.x *= -1.f;
+							getApp().increaseHighscore();
 						}
 						else//left side
 						{
 							mBall.setPosition(it.getPosition().x - mBall.getRadius() * 2.f, mBall.getPosition().y);
 							mBallSpeed.x *= -1.f;
+							getApp().increaseHighscore();
 						}
 					
 				
@@ -139,6 +152,7 @@ void GameScene::update()
 					{
 						mBall.setPosition(mBall.getPosition().x, float(mDownRow));
 						mBallSpeed.y *= -1.f;
+						getApp().increaseHighscore();
 					}
 					mStones.at(row).erase(mStones.at(row).begin() + counter);
 					counter = 0;
@@ -152,11 +166,15 @@ void GameScene::update()
 
 	}
 
-	if (mStones.empty())
+
+	if (mStones.at(0).empty() && mStones.at(1).empty() && mStones.at(2).empty())
 		getApp().setActiveScene(new WinScene(getApp()));
 
 
-
+	//calculate current score
+	std::stringstream strstring;
+	strstring << "Score: " << getApp().getHighscore();
+	mHighscore.setString(strstring.str());
 
 
 	//ball clamping of three sides
@@ -188,6 +206,9 @@ void GameScene::update()
 	}
 	//ball movement
 	mBall.move(mBallSpeed);
+
+	
+	
 }
 
 void GameScene::render()
@@ -198,5 +219,6 @@ void GameScene::render()
 
 	getApp().getWindow().draw(mBat);
 	getApp().getWindow().draw(mBall);
-
+	//show current score
+	getApp().getWindow().draw(mHighscore);
 }

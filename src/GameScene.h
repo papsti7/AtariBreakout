@@ -26,6 +26,8 @@ private:
 	sf::CircleShape mBall;
 
 	sf::Vector2f mBallSpeed;
+
+	sf::Text mHighscore;
 	
 	//rects and counter
 	std::vector<std::vector<sf::RectangleShape>> mStones;

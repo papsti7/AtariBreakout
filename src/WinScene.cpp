@@ -15,7 +15,10 @@ WinScene::WinScene(Application& app) : Scene(app)
 	mInfo.setPosition(10.f, 10.f);
 
 	mHighscore.setFont(getApp().getFont());
-	mHighscore.setString("You Won!\nYour Highscore: ");
+	std::stringstream highscore;
+	highscore << "You Wonn!\n Your Highscore: " << getApp().getHighscore();
+	std::string string = highscore.str();
+	mHighscore.setString(string);
 	mHighscore.setCharacterSize(50);
 	mHighscore.setColor(sf::Color::White);
 	//center text

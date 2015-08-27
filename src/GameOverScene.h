@@ -1,5 +1,6 @@
 #pragma once
 #include "Scene.h"
+#include <sstream>
 
 class GameScene;
 class GameOverScene : public Scene

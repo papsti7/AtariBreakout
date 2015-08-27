@@ -15,7 +15,10 @@ GameOverScene::GameOverScene(Application& app) : Scene(app)
 	mInfo.setPosition(10.f, 10.f);
 
 	mHighscore.setFont(getApp().getFont());
-	mHighscore.setString("Game Over!\n Your Highscore: ");
+	std::stringstream highscore;
+	highscore << "Game Over!\n Your Highscore: " << getApp().getHighscore();
+	std::string string = highscore.str();
+	mHighscore.setString(string);
 	mHighscore.setCharacterSize(50);
 	mHighscore.setColor(sf::Color::White);
 	//center text
