@@ -105,7 +105,7 @@ void GameScene::update()
 				if (((mBall.getPosition().y + mBall.getRadius()*2.f) >= it.getPosition().y) && (mBall.getPosition().x >= (it.getPosition().x - mBall.getRadius())) && (mBall.getPosition().x <= (it.getPosition().x + it.getSize().x - mBall.getRadius())))
 				{
 					mBallSpeed.y *= -1.f;
-					mStones.erase(mStones.begin() + counter);
+					mStones.at(row).erase(mStones.at(row).begin() + counter);
 					counter = 0;
 					break;
 				}
@@ -140,7 +140,7 @@ void GameScene::update()
 						mBall.setPosition(mBall.getPosition().x, float(mDownRow));
 						mBallSpeed.y *= -1.f;
 					}
-					mStones.erase(mStones.begin() + counter);
+					mStones.at(row).erase(mStones.at(row).begin() + counter);
 					counter = 0;
 					break;
 				}
