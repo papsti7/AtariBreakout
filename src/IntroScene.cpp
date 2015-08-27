@@ -24,7 +24,7 @@ void IntroScene::processEvent(const sf::Event& e)
 void IntroScene::update()
 {
 	//mBackgroundSpr.rotate(2);
-}
+}                                  
 
 void IntroScene::render()
 {

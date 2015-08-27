@@ -13,6 +13,21 @@ GameScene::GameScene(Application& app) : Scene(app)
 
 	mBallSpeed = { -5.f, -4.f };
 	
+	//stones init
+	sf::RectangleShape temp_rect;
+	temp_rect.setFillColor(sf::Color::Red);
+	temp_rect.setSize(sf::Vector2f(70.f, 40.f));
+	mUpRowOne = 50 - 8;
+	mDownRowOne = 50 + 40;
+	while (mSpaceCounter <= (getApp().getWindow().getSize().x - (10 + 70)))
+	{
+		mSpaceCounter += 10;
+		
+		temp_rect.setPosition(float(mSpaceCounter), 50.f);
+		mStones.push_back(temp_rect);
+
+		mSpaceCounter += 70;
+	}
 }
 
 void GameScene::processEvent(const sf::Event& e)
@@ -32,6 +47,70 @@ void GameScene::update()
 		mBat.setPosition(0.f, getApp().getWindow().getSize().y - (mBat.getSize().y + 25.f));
 	else if ((mBat.getPosition().x + mBat.getSize().x) >= getApp().getWindow().getSize().x)
 		mBat.setPosition(getApp().getWindow().getSize().x - mBat.getSize().x, getApp().getWindow().getSize().y - (mBat.getSize().y + 25.f));
+
+
+
+	//Ball collision with stones
+	unsigned counter = 0;
+	//upside
+	if (mBall.getPosition().y <= mUpRowOne)
+	{
+		counter = 0;
+		for (auto& it : mStones)
+		{
+			if (((mBall.getPosition().y + mBall.getRadius()*2.f) >= it.getPosition().y) && (mBall.getPosition().x >= (it.getPosition().x - mBall.getRadius())) && (mBall.getPosition().x <= (it.getPosition().x + it.getSize().x - mBall.getRadius())))
+			{
+				mBallSpeed.y *= -1.f;
+				mStones.erase(mStones.begin() + counter);
+				counter = 0;
+				break;
+			}
+			counter++;
+		}
+	}
+	else if (mBall.getPosition().y <= mDownRowOne)
+	{
+		counter = 0;
+		
+		for (auto& it : mStones)
+		{	
+			if ((mBall.getPosition().x >= (it.getPosition().x - mBall.getRadius())) && (mBall.getPosition().x <= (it.getPosition().x + it.getSize().x - mBall.getRadius())))
+			{
+				if (mBall.getPosition().y <= (mDownRowOne - 5.f))//sides
+				{
+					if (mBall.getPosition().x > (it.getPosition().x + (it.getSize().x / 2.f)))//right side
+					{
+						mBall.setPosition(it.getPosition().x + it.getSize().x, mBall.getPosition().y);
+						mBallSpeed.x *= -1.f;
+					}
+					else//left side
+					{
+						mBall.setPosition(it.getPosition().x - mBall.getRadius() * 2.f, mBall.getPosition().y);
+						mBallSpeed.x *= -1.f;
+					}
+					
+				
+				}
+				else//down
+				{
+					mBall.setPosition(mBall.getPosition().x, float(mDownRowOne));
+					mBallSpeed.y *= -1.f;
+				}
+				mStones.erase(mStones.begin() + counter);
+				counter = 0;
+				break;
+			}
+			counter++;
+		}
+		counter = 0;
+		
+	}
+
+
+
+
+
+
 
 	//ball clamping of three sides
 	if (mBall.getPosition().x <= 0.f)
@@ -66,6 +145,8 @@ void GameScene::update()
 
 void GameScene::render()
 {
+	for(auto& it : mStones)
+		getApp().getWindow().draw(it);
 	getApp().getWindow().draw(mBat);
 	getApp().getWindow().draw(mBall);
 

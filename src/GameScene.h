@@ -2,6 +2,8 @@
 #include "Scene.h"
 #include "GameOverScene.h"
 
+#include <vector>
+
 class GameScene : public Scene
 {
 public:
@@ -24,7 +26,11 @@ private:
 
 	sf::Vector2f mBallSpeed;
 	
-
+	//rects and counter
+	std::vector<sf::RectangleShape> mStones;
+	unsigned mSpaceCounter;
+	unsigned mUpRowOne;
+	unsigned mDownRowOne;
 
 
 };
