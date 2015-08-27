@@ -16,7 +16,7 @@ GameOverScene::GameOverScene(Application& app) : Scene(app)
 
 	mHighscore.setFont(getApp().getFont());
 	std::stringstream highscore;
-	highscore << "Game Over!\n Your Highscore: " << getApp().getHighscore();
+	highscore << "Game Over!\n Your Score: " << getApp().getHighscore();
 	std::string string = highscore.str();
 	mHighscore.setString(string);
 	mHighscore.setCharacterSize(50);

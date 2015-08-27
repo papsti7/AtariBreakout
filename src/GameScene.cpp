@@ -167,11 +167,6 @@ void GameScene::update()
 
 	}
 
-
-	if (mStones.at(0).empty() && mStones.at(1).empty() && mStones.at(2).empty())
-		getApp().setActiveScene(new WinScene(getApp()));
-
-
 	//calculate current score
 	std::stringstream strstring;
 	strstring << "Score: " << getApp().getHighscore();
@@ -182,6 +177,14 @@ void GameScene::update()
 	for (auto& rows : mStones)
 		for (auto& stones : rows)
 			counter++;
+
+	if (mStones.at(0).empty() && mStones.at(1).empty() && mStones.at(2).empty())
+		getApp().setActiveScene(new WinScene(getApp()));
+
+
+	
+
+	
 
 
 	if ((mStonesNumber - counter) >= 10)

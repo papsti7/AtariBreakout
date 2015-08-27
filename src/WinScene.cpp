@@ -16,7 +16,7 @@ WinScene::WinScene(Application& app) : Scene(app)
 
 	mHighscore.setFont(getApp().getFont());
 	std::stringstream highscore;
-	highscore << "You Wonn!\n Your Highscore: " << getApp().getHighscore();
+	highscore << "You Won!\n Your Highscore: " << getApp().getHighscore();
 	std::string string = highscore.str();
 	mHighscore.setString(string);
 	mHighscore.setCharacterSize(50);
