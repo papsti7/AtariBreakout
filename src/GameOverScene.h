@@ -23,7 +23,9 @@ private:
 	sf::Image mBackground;
 	sf::Texture mBackgroundTex;
 	sf::Sprite mBackgroundSpr;
+	//highscore
 	sf::Text mHighscore;
-
+	//info
+	sf::Text mInfo;
 
 };

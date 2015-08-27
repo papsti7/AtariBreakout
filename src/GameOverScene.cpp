@@ -6,6 +6,14 @@ GameOverScene::GameOverScene(Application& app) : Scene(app)
 	mBackground = getApp().getWindow().capture();
 	mBackgroundTex.loadFromImage(mBackground);
 	mBackgroundSpr.setTexture(mBackgroundTex);
+	mBackgroundSpr.setColor(sf::Color(255, 255, 255, 128));
+
+	mInfo.setFont(getApp().getFont());
+	mInfo.setString("Enter for new Game --------------- Escape for end Game");
+	mInfo.setCharacterSize(25);
+	mInfo.setColor(sf::Color(255, 255, 102));
+	mInfo.setPosition(10.f, 10.f);
+
 	mHighscore.setFont(getApp().getFont());
 	mHighscore.setString("Game Over!\n Your Highscore: ");
 	mHighscore.setCharacterSize(50);
@@ -36,13 +44,15 @@ void GameOverScene::processEvent(const sf::Event& e)
 
 void GameOverScene::update()
 {
-	mBackgroundSpr.setColor(sf::Color(255, 255, 255, 128));
+	
 }
 
 void GameOverScene::render()
 {
 	getApp().getWindow().draw(mBackgroundSpr);
 	getApp().getWindow().draw(mHighscore);
+	getApp().getWindow().draw(mInfo);
+
 
 
 }
