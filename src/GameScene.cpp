@@ -28,6 +28,7 @@ GameScene::GameScene(Application& app) : Scene(app)
 
 		mSpaceCounter += 70;
 	}
+
 }
 
 void GameScene::processEvent(const sf::Event& e)
@@ -106,7 +107,8 @@ void GameScene::update()
 		
 	}
 
-
+	if (mStones.empty())
+		getApp().setActiveScene(new WinScene(getApp()));
 
 
 

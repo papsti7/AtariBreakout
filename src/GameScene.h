@@ -1,6 +1,7 @@
 #pragma once
 #include "Scene.h"
 #include "GameOverScene.h"
+#include "WinScene.h"
 
 #include <vector>
 
